@@ -17,9 +17,8 @@ async function handleInput() {
     if (1 === 1)
     {
         try {
-            await    obs.SetCurrentScene
-            ({
-                'Scene 2': scene.name
+            await    obs.send('SetCurrentScene', {
+                'scene-name': 'Scene 2'
             });
             
         } catch (error) {
