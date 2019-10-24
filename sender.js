@@ -1,45 +1,46 @@
 const OBSWebSocket = require('obs-websocket-js');
 const obs = new OBSWebSocket();
 
-const scenes = [
-    {
-        scene: 'Start Scene',
-        paths: ['Scene 2-1', 'Scene 2-2']
-    },
-    {
-        scene: 'Scene 2-1',
-        paths: ['Scene 3-1', 'Scene 3-2-1']
-    },
-    {
-        scene: 'Scene 2-2',
-        paths: ['Scene 3-2-2', 'Scene 3-3']
-    },
-    {
-        scene: 'Scene 3-1',
-        paths: ['Scene 3-2-3', 'Scene 4-1']
-    },
-    {
-        scene: 'Scene 3-2-1',
-        paths: ['Scene 4-2', 'Scene4-3']
-    },
-    {
-        scene: 'Scene 3-2-2',
-        paths: ['Scene 4-2', 'Scene4-3']
-    },
-    {
-        scene: 'Scene 3-2-3',
-        paths: ['Scene 4-2', 'Scene4-3']
-    },
-    {
-        scene: 'Scene 3-3',
-        paths: ['Scene 4-2', 'Scene 4-3']
-    }
-    
-]
+async function init() {
+    await obs.connect({ address: 'localhost:4444', password: 'BigPasswordEnergy' })
+}
 
-const start = scenes[0]; 
+const scenes = {};
+scenes['Scene 1'] = {
+    title: 'This is the first scene',
+    paths: ['Scene 2']
+};
+scenes['Scene 2'] = {
+    title: 'This is the second scene',
+    paths: ['Scene 1', 'Scene 2']
+};
+scenes['Scene 3'] = {
+    title: 'Third scene',
+    paths: ['Scene '. 'Scene ']
+}
 
-const scene21 = scenes.find((s) => s.scene === 'Scene 2-1')
+let currentScene = scenes['Scene 1']
+
+// const newscene = scenes[scenes['Scene 1'].paths[0]]
+
+/**
+ * Changes the current scene
+ * @param {string} newScene the new scene to change to
+ */
+async function changeScene(newScene) {
+    // Change our current scene
+    currentScene = scenes[newScene];
+
+    // Send the scene change to OBS
+    await obs.send('SetCurrentScene', {
+        'scene-name': newScene
+    });
+
+    // Update the new choices on the poll
+    // ... 
+    ///currentScene.paths
+} 
+
 
 init().then(() => {
     // ... event handlers ..
@@ -49,22 +50,24 @@ init().then(() => {
 // ...
 
 
-async function init() {
-    await obs.connect({ address: 'localhost:4444', password: 'BigPasswordEnergy' })
-}
+
 
 
 choice1 = ;
 choice2 = ;
 
 
+
 async function handleInput() {
+    // currentScene.paths
+    // returns an array of paths
+
+    // Find the scene to change to
     if (choice1 > choice2)
     {
         try {
-            await    obs.send('SetCurrentScene', {
-                'scene-name': 'Scene 2'
-            });
+            // Change the scene
+            await changeScene('Scene 1');
             
         } catch (error) {
             console.log(error)
@@ -75,10 +78,8 @@ async function handleInput() {
     {
         try
         {
-            await obs.send('SetCurrentScene',
-            {
-                'scene-name': 'Scene 3'
-            });
+            // Change the scene
+            await changeScene('this.paths[1]');
         } catch (error) {
             console.log(error)
         }
