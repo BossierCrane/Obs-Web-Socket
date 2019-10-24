@@ -12,6 +12,6 @@ const scene1 = {
 
 async function SceneChange() {
     obs.send('SetCurrentScene', {
-        'scene-name' : // ...
+        'scene-name' :  // ...
     });
 }

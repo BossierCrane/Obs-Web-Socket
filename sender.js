@@ -16,7 +16,7 @@ scenes['Scene 2'] = {
 };
 scenes['Scene 3'] = {
     title: 'Third scene',
-    paths: ['Scene '. 'Scene ']
+    paths: ['Scene ', 'Scene ']
 }
 
 let currentScene = scenes['Scene 1']
