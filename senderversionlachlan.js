@@ -9,12 +9,11 @@ async function init() {
 // Stuff for pusher if pusher is use
 var Pusher = require('pusher');
 
-var Pusher = new Pusher({
+var pusher = new Pusher({
   appId: '884778',
   key: '7c0ae57426d90de7c792',
   secret: '01963719fe760bd46d54',
   cluster: 'ap4',
-  encrypted: true
 });
 
 pusher.trigger('my-channel', 'my-event', {
@@ -25,57 +24,67 @@ pusher.trigger('my-channel', 'my-event', {
 // Objects and paths
 const scene1 = {
     name: 'first scene',
-    paths: ['scene2-1', 'scene2-2']
+    paths: ['scene21', 'scene22'],
+    length: // ...
 }
 
 const scene21 = {
     name: 'city path',
-    paths: ['scene3-1', 'scene3-2-1']
+    paths: ['scene3-1', 'scene3-2-1'],
+    length: // ...
 }
 
 const scen22 = {
     name: 'park path',
-    paths: ['scence3-2-1', 'scene 3-3']
+    paths: ['scence321', 'scene 33'],
+    length: // ...
+
 }
 
 const scene31 = {
     name: 'parkrush',
-    paths: ['scene3-2-3', 'scene4-1']
+    paths: ['scene323', 'scene41'],
+    length: // ...
 }
 const scene321 = {
     name: 'take too long',
-    paths: ['scene4-3', 'scene4-2']
+    paths: ['scene43', 'scene42'],
+    length: // ...
 }
 const scene322 = {
     name: 'lost package',
-    paths: ['scene4-3', 'scene4-2']
+    paths: ['scene43', 'scene42'],
+    length: // ...
 }
 const scene323 = {
     name: 'too late from rejecting ride',
-    paths: ['scene4-3', 'scene4-2']
+    paths: ['scene43', 'scene42'],
+    length: // ...
 }
 const scene33 = {
     name: 'faint',
-    paths: ['scene4-2', 'scene4-3']
+    paths: ['scene42', 'scene43'],
+    length: // ...
 }
 
 const scene41 = {
     name: 'delivery',
-    paths: ['scene1', 'scene1']
+    paths: ['scene1', 'scene1'],
+    length: // ...
 }
 const scene42 = {
     name: 'late lunch',
-    paths: ['scene1', 'scene1']
+    paths: ['scene1', 'scene1'],
+    length: // ...
 }
 
-const scene42 = {
+const scene43 = {
     name: 'cry',
-    paths: ['scene1', 'scene1']
+    paths: ['scene1', 'scene1'],
+    length: // ...
 }
 
 
-
-C:\Users\lachl\OneDrive\Documents\GitHub\Obs-Web-Socket\senderversionlachlan.js
 
 async function changeScene(choice) {
     obs.send('SetCurrentScene', {
@@ -83,30 +92,49 @@ async function changeScene(choice) {
     });
 }
 
+async function end(){
+    obs.send('SetCurrentScene', {
+        'scene-name' : scene1
+    })
+}
+
 async function Result(a, b) 
 {
+    // make buttons appear, gather result
     if (a < b)
     {
         try
         {
             // Change the scene
-            await changeScene('this.paths[0]');
+            await changeScene(current.paths[0]);
         
         } catch (error) 
         {
             console.log(error)
         }
+        var current = current.paths[1];
     }
     else
     {
         try
         {
             // Change the scene
-            await changeScene('this.paths[1]');
+            await changeScene(current.paths[1]);
         
         } catch (error) 
         {
             console.log(error)
         }
+        var current = current.paths[1];
     }
-    }
+}
+
+var current = scene1;
+
+while (current !== scene41 || current !== scene42 || current !== scene43)
+{
+setTimeout(Result(a, b), current.length);
+}
+setTimeout(end, current.length);
+
+
