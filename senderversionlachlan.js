@@ -1,9 +1,15 @@
+
+
+// Connection to OBS
 const OBSWebSocket = require('obs-websocket-js');
 const obs = new OBSWebSocket();
-
+async function init() {
+    await obs.connect({ address: 'localhost:4444', password: 'BigPasswordEnergy' })
+}
+// Stuff for pusher if pusher is use
 var Pusher = require('pusher');
 
-var channels_client = new Pusher({
+var Pusher = new Pusher({
   appId: '884778',
   key: '7c0ae57426d90de7c792',
   secret: '01963719fe760bd46d54',
@@ -11,9 +17,10 @@ var channels_client = new Pusher({
   encrypted: true
 });
 
-channels_client.trigger('my-channel', 'my-event', {
-  "message": "hello world"
-});
+pusher.trigger('my-channel', 'my-event', {
+  "message": "Server Connected"
+})
+
 
 // Objects and paths
 const scene1 = {
@@ -66,11 +73,9 @@ const scene42 = {
     paths: ['scene1', 'scene1']
 }
 
-async function init() {
-    await obs.connect({ address: 'localhost:4444', password: 'BigPasswordEnergy' })
-}
 
 
+C:\Users\lachl\OneDrive\Documents\GitHub\Obs-Web-Socket\senderversionlachlan.js
 
 async function changeScene(choice) {
     obs.send('SetCurrentScene', {
