@@ -131,18 +131,22 @@ async function Result(a, b)
 }
 
 async function timewarp (){
-    var current = scene1;
+current = scene1;
 while (current !== scene41 || current !== scene42 || current !== scene43)
 {
-setTimeout(Result, 5000, 2, 1);
+    
+setTimeout(Result(2,1), 5000,);
+
 }
+
+
 }
-setTimeout(end, 5000);
 
 
-var current = scene1;
 
-init().then(timewarp);
+
+
+init().then(timewarp());
 
 setTimeout(end, 5000);
 
