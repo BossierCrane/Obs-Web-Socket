@@ -99,34 +99,34 @@ async function end(){
     })
 }
 
-async function Result(a, b) 
+async function Result(c, d) 
 {
     // make buttons appear, gather result
-    if (a < b)
+    if (a >= b)
     {
         try
         {
             // Change the scene
-            await changeScene(current.paths[0]);
+            await changeScene(c);
         
         } catch (error) 
         {
             console.log(error)
         }
-        var current = current.paths[0];
+        var current = c;
     }
     else
     {
         try
         {
             // Change the scene
-            await changeScene(current.paths[1]);
+            await changeScene(d);
         
         } catch (error) 
         {
             console.log(error)
         }
-        var current = current.paths[1];
+        var current = d;
     }
 }
 
@@ -142,11 +142,13 @@ setTimeout(Result(2,1), 5000,);
 
 }
 
+a = 1;
+b = 2;
+c = scene1.paths[0]
+d = scene1.paths[1]
 
 
-
-
-init().then(timewarp());
+init().then(Result());
 
 setTimeout(end, 5000);
 
