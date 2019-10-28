@@ -3,26 +3,24 @@
 // Connection to OBS
 const OBSWebSocket = require('obs-websocket-js');
 const obs = new OBSWebSocket();
+
 async function init() {
     await obs.connect({ address: 'localhost:4444', password: 'BigPasswordEnergy' })
 }
 // Stuff for pusher if pusher is use
-//var Pusher = require('pusher');
-//
-//var pusher = new Pusher({
-//  appId: '884778',
-//  key: '7c0ae57426d90de7c792',
-//  secret: '01963719fe760bd46d54',
-//  cluster: 'ap4',
-//});
-//
-//pusher.trigger('my-channel', 'my-event', {
-//  "message": "Server Connected"
-//})
+var Pusher = require('pusher');
 
-//
+var pusher = new Pusher({
+  appId: '884778',
+  key: '7c0ae57426d90de7c792',
+  secret: '01963719fe760bd46d54',
+  cluster: 'ap4',
+});
 
-//
+pusher.trigger('my-channel', 'my-event', {
+  "message": "Server Connected"
+})
+
 
 // Objects and paths
 const scene1 = {
@@ -132,18 +130,19 @@ async function Result(a, b)
     }
 }
 
-
-var current = scene1;
-
-init();
-
-while (true)    {
-
+async function timewarp (){
+    var current = scene1;
 while (current !== scene41 || current !== scene42 || current !== scene43)
 {
 setTimeout(Result, 5000, 2, 1);
 }
+}
 setTimeout(end, 5000);
 
 
-}
+var current = scene1;
+
+init().then(timewarp);
+
+setTimeout(end, 5000);
+
