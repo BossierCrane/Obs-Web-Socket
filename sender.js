@@ -53,10 +53,6 @@ init().then(() => {
 
 
 
-choice1 = ;
-choice2 = ;
-
-
 
 async function handleInput() {
     // currentScene.paths
