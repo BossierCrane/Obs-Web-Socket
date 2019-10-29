@@ -3,83 +3,87 @@
 // Connection to OBS
 const OBSWebSocket = require('obs-websocket-js');
 const obs = new OBSWebSocket();
-
 async function init() {
     await obs.connect({ address: 'localhost:4444', password: 'BigPasswordEnergy' })
 }
+
 // Stuff for pusher if pusher is use
 var Pusher = require('pusher');
-
 var pusher = new Pusher({
   appId: '884778',
   key: '7c0ae57426d90de7c792',
   secret: '01963719fe760bd46d54',
   cluster: 'ap4',
 });
-
 pusher.trigger('my-channel', 'my-event', {
   "message": "Server Connected"
 })
 
 
 // Objects and paths
-const scene1 = {
+const scenes = {};
+scenes ['scene0']={
+    name: 'null-scene',
+    paths: ['scene1', 'scene1'],
+    length: 0
+}
+scenes ['scene1']= {
     name: 'first scene',
     paths: ['scene21', 'scene22'],
     length:  0// ...
 }
 
-const scene21 = {
+scenes ['scene21'] = {
     name: 'city path',
     paths: ['scene31', 'scene321'],
     length: 0// ...
 }
 
-const scene22 = {
+scenes ['scene22'] = {
     name: 'park path',
-    paths: ['scence321', 'scene 33'],
+    paths: ['scence321', 'scene33'],
     length: 0// ...
 
 }
 
-const scene31 = {
+scenes ['scene31'] = {
     name: 'parkrush',
     paths: ['scene323', 'scene41'],
     length: 0// ...
 }
-const scene321 = {
+scenes ['scene321'] = {
     name: 'take too long',
     paths: ['scene43', 'scene42'],
     length: 0// ...
 }
-const scene322 = {
+scenes ['scene322'] = {
     name: 'lost package',
     paths: ['scene43', 'scene42'],
     length: 0// ...
 }
-const scene323 = {
+scenes ['scene323'] = {
     name: 'too late from rejecting ride',
     paths: ['scene43', 'scene42'],
     length: 0// ...
 }
-const scene33 = {
+scenes ['scene33'] = {
     name: 'faint',
     paths: ['scene42', 'scene43'],
     length: 0// ...
 }
 
-const scene41 = {
+scenes ['scene41'] = {
     name: 'delivery',
     paths: ['scene1', 'scene1'],
     length: 0// ...
 }
-const scene42 = {
+scenes ['scene42'] = {
     name: 'late lunch',
     paths: ['scene1', 'scene1'],
     length: 0// ...
 }
 
-const scene43 = {
+scenes ['scene43'] = {
     name: 'cry',
     paths: ['scene1', 'scene1'],
     length: 0// ...
@@ -87,17 +91,16 @@ const scene43 = {
 
 
 
-async function changeScene(choice) {
-    obs.send('SetCurrentScene', {
-        'scene-name' : choice 
+async function changeScene(newScene) {
+    
+    await obs.send('SetCurrentScene', {
+        'scene-name' : newScene
     });
+    currentScene = scenes[newScene];
 }
 
-async function end(){
-    obs.send('SetCurrentScene', {
-        'scene-name' : 'scene1'
-    })
-}
+
+
 
 async function Result(a, b) 
 {
@@ -107,46 +110,37 @@ async function Result(a, b)
         try
         {
             // Change the scene
-            await changeScene(current.paths[0]);
-        
+            await changeScene(currentScene.paths[0]);
+            let currentScene = (currentScene.paths[0]);
         } catch (error) 
         {
             console.log(error)
         }
-        var current = current.paths[0];
+        
     }
     else
     {
         try
         {
             // Change the scene
-            await changeScene(current.paths[1]);
+            await changeScene(currentScene.paths[1]);
         
         } catch (error) 
         {
             console.log(error)
         }
-        var current = current.paths[1];
+        
     }
 }
 
-async function timewarp (){
-current = scene1;
-while (current !== scene41 || current !== scene42 || current !== scene43)
-{
-    
-setTimeout(Result(2,1), 5000,);
-
-}
+let currentScene = scenes['scene0']
 
 
-}
+var a = 2;
+var b = 55
 
 
+init();
+setInterval(Result, 5000);
 
-
-
-init().then(timewarp());
-
-setTimeout(end, 5000);
 

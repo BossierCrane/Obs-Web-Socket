@@ -42,16 +42,20 @@ async function changeScene(newScene) {
 } 
 
 
+    
+
 init().then(() => {
     // ... event handlers ..
-    handleInput();
+   
+setInterval(handleInput, 5000);
 });
 
 // ...
 
 
 
-
+choice1 = 1;
+choice2 = 2;
 
 
 async function handleInput() {
@@ -63,7 +67,7 @@ async function handleInput() {
     {
         try {
             // Change the scene
-            await changeScene('Scene 1');
+            await changeScene('scene21');
             
         } catch (error) {
             console.log(error)
@@ -75,9 +79,12 @@ async function handleInput() {
         try
         {
             // Change the scene
-            await changeScene('this.paths[1]');
+            await changeScene('scene22');
         } catch (error) {
             console.log(error)
         }
     }
 }
+
+
+ 
