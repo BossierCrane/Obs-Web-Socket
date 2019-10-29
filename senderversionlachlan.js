@@ -35,7 +35,7 @@ const scene21 = {
     length: 0// ...
 }
 
-const scen22 = {
+const scene22 = {
     name: 'park path',
     paths: ['scence321', 'scene 33'],
     length: 0// ...
