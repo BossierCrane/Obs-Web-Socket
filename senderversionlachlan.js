@@ -157,6 +157,6 @@ var b = 0;
 
 
 init();
-setInterval(Result, 5000);
+setInterval(Result, 3000);
 
 
