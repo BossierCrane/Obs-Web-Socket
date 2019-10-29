@@ -7,17 +7,7 @@ async function init() {
     await obs.connect({ address: 'localhost:4444', password: 'BigPasswordEnergy' })
 }
 
-// Stuff for pusher if pusher is use
-var Pusher = require('pusher');
-var pusher = new Pusher({
-  appId: '884778',
-  key: '7c0ae57426d90de7c792',
-  secret: '01963719fe760bd46d54',
-  cluster: 'ap4',
-});
-pusher.trigger('my-channel', 'my-event', {
-  "message": "Server Connected"
-})
+
 
 
 // Objects and paths
@@ -102,8 +92,9 @@ async function changeScene(newScene) {
 
 
 
-async function Result(a, b) 
+async function Result() 
 {
+    
     // make buttons appear, gather result
     if (a < b)
     {
@@ -136,8 +127,8 @@ async function Result(a, b)
 let currentScene = scenes['scene0']
 
 
-var a = 2;
-var b = 55
+var a = 0;
+var b = 0;
 
 
 init();
