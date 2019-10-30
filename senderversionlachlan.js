@@ -1,29 +1,29 @@
-//Connection to socket.io
-var app = require('http').createServer(handler)
-var io = require('socket.io')(app);
-var fs = require('fs');
-
-app.listen(80);
-
-function handler (req, res) {
-  fs.readFile(__dirname + '/index.html',
-  function (err, data) {
-    if (err) {
-      res.writeHead(500);
-      return res.end('Error loading index.html');
-    }
-
-    res.writeHead(200);
-    res.end(data);
-  });
-}
-
-io.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
-});
+////Connection to socket.io
+//var app = require('http').createServer(handler)
+//var io = require('socket.io')(app);
+//var fs = require('fs');
+//
+//app.listen(80);
+//
+//function handler (req, res) {
+//  fs.readFile(__dirname + '/index.html',
+//  function (err, data) {
+//    if (err) {
+//      res.writeHead(500);
+//      return res.end('Error loading index.html');
+//    }
+//
+//    res.writeHead(200);
+//    res.end(data);
+//  });
+//}
+//
+//io.on('connection', function (socket) {
+//  socket.emit('news', { hello: 'world' });
+//  socket.on('my other event', function (data) {
+//    console.log(data);
+//  });
+//});
 
 // Connection to OBS
 const OBSWebSocket = require('obs-websocket-js');
@@ -62,17 +62,17 @@ scenes ['scene22'] = {
 }
 
 scenes ['scene31'] = {
-    name: 'parkrush',
+    name: 'cityrush',
     paths: ['scene323', 'scene41'],
     length: 0// ...
 }
 scenes ['scene321'] = {
-    name: 'take too long',
+    name: 'city take too long',
     paths: ['scene43', 'scene42'],
     length: 0// ...
 }
 scenes ['scene322'] = {
-    name: 'lost package',
+    name: 'park lost package',
     paths: ['scene43', 'scene42'],
     length: 0// ...
 }
@@ -82,7 +82,7 @@ scenes ['scene323'] = {
     length: 0// ...
 }
 scenes ['scene33'] = {
-    name: 'faint',
+    name: 'parkrush/faint',
     paths: ['scene42', 'scene43'],
     length: 0// ...
 }
@@ -156,7 +156,8 @@ var a = 0;
 var b = 0;
 
 
-init();
-setInterval(Result, 3000);
+init();{
+setTimeout(Result, 3000)
+setInterval(Result, 15000);
 
-
+}
