@@ -1,29 +1,34 @@
-////Connection to socket.io
-//var app = require('http').createServer(handler)
-//var io = require('socket.io')(app);
-//var fs = require('fs');
-//
-//app.listen(80);
-//
-//function handler (req, res) {
-//  fs.readFile(__dirname + '/index.html',
-//  function (err, data) {
-//    if (err) {
-//      res.writeHead(500);
-//      return res.end('Error loading index.html');
-//    }
-//
-//    res.writeHead(200);
-//    res.end(data);
-//  });
-//}
-//
-//io.on('connection', function (socket) {
-//  socket.emit('news', { hello: 'world' });
-//  socket.on('my other event', function (data) {
-//    console.log(data);
-//  });
-//});
+var app = require('express')();
+var http = require('http').createServer(app);
+var io = require('socket.io')(http);
+
+
+io.on('connection', function(socket){
+  console.log('a user connected');
+});
+
+http.listen(3000, function(){
+  console.log('listening on *:3000');
+});
+
+io.on('connection', function (socket) {
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
+  //polling function
+  socket.on('left', (add) => {
+    console.log('Left +' + add)
+    a = a + add
+}); 
+socket.on('right', (add) => {
+    console.log('Right +' + add)
+    b = b + add
+});
+});
+
+
+
 
 // Connection to OBS
 const OBSWebSocket = require('obs-websocket-js');
@@ -45,7 +50,7 @@ scenes ['scene0']={
 scenes ['scene1']= {
     name: 'first scene',
     paths: ['scene21', 'scene22'],
-    length:  0// ...
+    length:  40000// ...
 }
 
 scenes ['scene21'] = {
@@ -121,14 +126,20 @@ async function Result()
 {
     
     // make buttons appear, gather result
-    if (a < b)
+    if (a > b)
     {
         try
         {
             // Change the scene
             await changeScene(currentScene.paths[0]);
-            let currentScene = (currentScene.paths[0]);
+          
+           
+                a = 0;
+                b = 0;
+               
+            
         } catch (error) 
+        
         {
             console.log(error)
         }
@@ -136,17 +147,23 @@ async function Result()
     }
     else
     {
+
         try
         {
             // Change the scene
             await changeScene(currentScene.paths[1]);
-        
+            
+                a = 0;
+                b = 0;
+                
+            
         } catch (error) 
         {
             console.log(error)
         }
         
     }
+    
 }
 
 let currentScene = scenes['scene0']
@@ -156,8 +173,10 @@ var a = 0;
 var b = 0;
 
 
-init();{
-setTimeout(Result, 3000)
-setInterval(Result, 15000);
+init();
+setTimeout(Result, 3000);
+setInterval(Result, 43000);
 
-}
+
+    
+
