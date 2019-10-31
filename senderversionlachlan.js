@@ -45,41 +45,41 @@ const scenes = {};
 scenes ['scene0']={
     name: 'null-scene',
     paths: ['scene1', 'scene1'],
-    length: 0
+    length: 3000//....
 }
 scenes ['scene1']= {
     name: 'first scene',
     paths: ['scene21', 'scene22'],
-    length:  40000// ...
+    length:  40000//....
 }
 
 scenes ['scene21'] = {
     name: 'city path',
     paths: ['scene31', 'scene321'],
-    length: 0// ...
+    length: 29000//...
 }
 
 scenes ['scene22'] = {
     name: 'park path',
-    paths: ['scence321', 'scene33'],
-    length: 0// ...
+    paths: ['scene321', 'scene33'],
+    length: 16000//...
 
 }
 
 scenes ['scene31'] = {
     name: 'cityrush',
     paths: ['scene323', 'scene41'],
-    length: 0// ...
+    length: 40000// ...
 }
 scenes ['scene321'] = {
     name: 'city take too long',
     paths: ['scene43', 'scene42'],
-    length: 0// ...
+    length: 18000// ...
 }
 scenes ['scene322'] = {
     name: 'park lost package',
     paths: ['scene43', 'scene42'],
-    length: 0// ...
+    length: 50000// ...
 }
 scenes ['scene323'] = {
     name: 'too late from rejecting ride',
@@ -89,7 +89,7 @@ scenes ['scene323'] = {
 scenes ['scene33'] = {
     name: 'parkrush/faint',
     paths: ['scene42', 'scene43'],
-    length: 0// ...
+    length: 10000// ...
 }
 
 scenes ['scene41'] = {
@@ -136,7 +136,7 @@ async function Result()
            
                 a = 0;
                 b = 0;
-               
+                setTimeout(Result, currentScene.length);
             
         } catch (error) 
         
@@ -155,7 +155,7 @@ async function Result()
             
                 a = 0;
                 b = 0;
-                
+                setTimeout(Result, currentScene.length);
             
         } catch (error) 
         {
@@ -174,8 +174,8 @@ var b = 0;
 
 
 init();
-setTimeout(Result, 3000);
-setInterval(Result, 43000);
+setTimeout(Result, currentScene.length);
+
 
 
     
