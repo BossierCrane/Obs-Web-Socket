@@ -46,7 +46,7 @@ const scenes = {};
 scenes ['scene0']={
     name: 'null-scene',
     paths: ['scene1', 'scene1'],
-    length: 3000,//.... 
+    length: 30000,//.... 
     choices: ['null', 'null']
 }
 scenes ['scene1']= {
@@ -73,19 +73,19 @@ scenes ['scene22'] = {
 scenes ['scene31'] = {
     name: 'cityrush',
     paths: ['scene323', 'scene41'],
-    length: 0, //.... 3a needs combining with 4
+    length: 45200, //.... 3a and 4
     choices: ['Don\'t get in', 'Get in']
 }
 scenes ['scene321'] = {
     name: 'city take too long',
     paths: ['scene43', 'scene42'],
-    length: 0,//.... 3b needs combining with 5
+    length: 42300,//.... 3b and 5
     choices: ['Go Home ', 'Search for friend']
 }
 scenes ['scene322'] = {
     name: 'park lost package',
     paths: ['scene43', 'scene42'],
-    length: 0,//.... 2a needs combining with 5
+    length: 70460,//.... 2a and 5
     choices: ['Go Home ', 'Search for friend']
 }
 scenes ['scene323'] = {
@@ -97,7 +97,7 @@ scenes ['scene323'] = {
 scenes ['scene33'] = {
     name: 'parkrush/faint',
     paths: ['scene42', 'scene43'],
-    length: 0,//.... needs combining scene 2b and scene 6
+    length: 60860,//....  scene 2b and scene 6
     choices: ['Search for Friend', 'Go Home']
 }
 
