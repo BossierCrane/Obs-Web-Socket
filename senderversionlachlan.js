@@ -12,20 +12,22 @@ http.listen(3000, function(){
 });
 
 io.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
-  //polling function
-  socket.on('left', (add) => {
-    console.log('Left +' + add)
-    a = a + add
-}); 
-socket.on('right', (add) => {
-    console.log('Right +' + add)
-    b = b + add
+    socket.emit('news', { hello: 'world' });
+    
+    socket.on('my other event', function (data) {
+        console.log(data);
+    });
+    //polling function
+    socket.on('left', (add) => {
+        console.log('Left +' + add)
+        a = a + add
+    }); 
+    socket.on('right', (add) => {
+        console.log('Right +' + add)
+        b = b + add
+    });
 });
-});
+
 
 
 
@@ -39,74 +41,84 @@ async function init() {
 
 
 
-
 // Objects and paths
 const scenes = {};
 scenes ['scene0']={
     name: 'null-scene',
     paths: ['scene1', 'scene1'],
-    length: 3000//....
+    length: 3000,//.... 
+    choices: ['null', 'null']
 }
 scenes ['scene1']= {
     name: 'first scene',
     paths: ['scene21', 'scene22'],
-    length:  40000//....
+    length:  25860,//.... scene 1
+    choices: ['City', 'Park']
 }
 
 scenes ['scene21'] = {
     name: 'city path',
     paths: ['scene31', 'scene321'],
-    length: 29000//...
+    length: 14640,//.... scene 3
+    choices: ['Rush', 'Take your Time']
 }
 
 scenes ['scene22'] = {
     name: 'park path',
-    paths: ['scene321', 'scene33'],
-    length: 16000//...
-
+    paths: ['scene322', 'scene33'],
+    length: 15320,//.... scene 2
+    choices: ['Take a break', 'Keep going']
 }
 
 scenes ['scene31'] = {
     name: 'cityrush',
     paths: ['scene323', 'scene41'],
-    length: 40000// ...
+    length: 0, //.... 3a needs combining with 4
+    choices: ['Don\'t get in', 'Get in']
 }
 scenes ['scene321'] = {
     name: 'city take too long',
     paths: ['scene43', 'scene42'],
-    length: 18000// ...
+    length: 0,//.... 3b needs combining with 5
+    choices: ['Go Home ', 'Search for friend']
 }
 scenes ['scene322'] = {
     name: 'park lost package',
     paths: ['scene43', 'scene42'],
-    length: 50000// ...
+    length: 0,//.... 2a needs combining with 5
+    choices: ['Go Home ', 'Search for friend']
 }
 scenes ['scene323'] = {
     name: 'too late from rejecting ride',
     paths: ['scene43', 'scene42'],
-    length: 0// ...
+    length: 23700,//.... this one is just scene 5
+    choices: ['Go Home ', 'Search for friend']
 }
 scenes ['scene33'] = {
     name: 'parkrush/faint',
     paths: ['scene42', 'scene43'],
-    length: 10000// ...
+    length: 0,//.... needs combining scene 2b and scene 6
+    choices: ['Search for Friend', 'Go Home']
 }
 
 scenes ['scene41'] = {
     name: 'delivery',
     paths: ['scene1', 'scene1'],
-    length: 0// ...
+    length: 34400,// ... scene 7
+    choices: ['null', 'null']
 }
 scenes ['scene42'] = {
     name: 'late lunch',
     paths: ['scene1', 'scene1'],
-    length: 0// ...
+    length: 28280,// ... scene 8
+    choices: ['null', 'null']
 }
 
 scenes ['scene43'] = {
-    name: 'cry',
+    name: 'go home',
     paths: ['scene1', 'scene1'],
-    length: 0// ...
+    length: 20140,// ... scene 9
+    choices: ['null', 'null']
 }
 
 
@@ -125,19 +137,19 @@ async function changeScene(newScene) {
 async function Result() 
 {
     
-    // make buttons appear, gather result
+    // , gather result
     if (a > b)
     {
         try
         {
             // Change the scene
             await changeScene(currentScene.paths[0]);
-          
+
            
                 a = 0;
                 b = 0;
-                setTimeout(Result, currentScene.length);
-            
+                setTimeout(choosingTime, currentScene.length);
+                io.emit('disappear');
         } catch (error) 
         
         {
@@ -155,8 +167,8 @@ async function Result()
             
                 a = 0;
                 b = 0;
-                setTimeout(Result, currentScene.length);
-            
+                setTimeout(choosingTime, currentScene.length);
+                io.emit('disappear');
         } catch (error) 
         {
             console.log(error)
@@ -172,9 +184,19 @@ let currentScene = scenes['scene0']
 var a = 0;
 var b = 0;
 
+function choosingTime(){
+if (currentScene == scenes['scene0'] ||  currentScene == scenes['scene41'] ||  currentScene == scenes['scene42'] ||  currentScene == scenes['scene43']) {
+    setTimeout(Result, 0);
+}
+else {
+    //........ call buttons
+    io.emit('change', currentScene.choices[0], currentScene.choices[1])
+    setTimeout(Result, 16000);
+}
+}
 
 init();
-setTimeout(Result, currentScene.length);
+setTimeout(choosingTime, currentScene.length);
 
 
 
