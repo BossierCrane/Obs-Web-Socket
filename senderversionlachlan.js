@@ -46,7 +46,7 @@ const scenes = {};
 scenes ['scene0']={
     name: 'null-scene',
     paths: ['scene1', 'scene1'],
-    length: 30000,//.... 
+    length: 120000,//.... 
     choices: ['null', 'null']
 }
 scenes ['scene1']= {
@@ -103,21 +103,28 @@ scenes ['scene33'] = {
 
 scenes ['scene41'] = {
     name: 'delivery',
-    paths: ['scene1', 'scene1'],
+    paths: ['credits', 'credits'],
     length: 34400,// ... scene 7
     choices: ['null', 'null']
 }
 scenes ['scene42'] = {
     name: 'late lunch',
-    paths: ['scene1', 'scene1'],
+    paths: ['credits', 'credits'],
     length: 28280,// ... scene 8
     choices: ['null', 'null']
 }
 
 scenes ['scene43'] = {
     name: 'go home',
-    paths: ['scene1', 'scene1'],
+    paths: ['credits', 'credits'],
     length: 20140,// ... scene 9
+    choices: ['null', 'null']
+}
+
+scenes ['credits'] = {
+    name: 'credits',
+    paths: ['scene1', 'scene1'],
+    length: 30000,
     choices: ['null', 'null']
 }
 
@@ -185,7 +192,7 @@ var a = 0;
 var b = 0;
 
 function choosingTime(){
-if (currentScene == scenes['scene0'] ||  currentScene == scenes['scene41'] ||  currentScene == scenes['scene42'] ||  currentScene == scenes['scene43']) {
+if (currentScene == scenes['scene0'] ||  currentScene == scenes['scene41'] ||  currentScene == scenes['scene42'] ||  currentScene == scenes['scene43'] ||  currentScene == scenes['credits']) {
     setTimeout(Result, 0);
 }
 else {
