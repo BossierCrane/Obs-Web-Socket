@@ -46,7 +46,7 @@ const scenes = {};
 scenes ['scene0']={
     name: 'null-scene',
     paths: ['scene1', 'scene1'],
-    length: 120000,//.... 
+    length: 12000,//.... 
     choices: ['null', 'null']
 }
 scenes ['scene1']= {
