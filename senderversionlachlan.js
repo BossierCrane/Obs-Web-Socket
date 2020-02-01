@@ -33,6 +33,8 @@ io.on('connection', function (socket) {
 
 
 // Connection to OBS
+// this is the connection to obs, using local host, and password protected, honestly for no real reason.
+// the plugin does not require a password, and could have been left blank
 const OBSWebSocket = require('obs-websocket-js');
 const obs = new OBSWebSocket();
 async function init() {
@@ -42,12 +44,18 @@ async function init() {
 
 
 // Objects and paths
+// The notes and scene names in this section were to ensure I could correctly attach scenes, as well as get versions
+// that were combinations of multiple scenes that weren't separated by choices, as that adds some unneeded complexity
+// this complexity is however negated, as there was a work around for the ending scenes, as that was necessary
+// to loop back to the beginning, and could be applied in the other circumstance
 const scenes = {};
-scenes ['scene0']={
-    name: 'null-scene',
-    paths: ['scene1', 'scene1'],
-    length: 12000,//.... 
-    choices: ['null', 'null']
+// below is a null scene, to add a gap before the server starts with a default offline screen or the like
+// however, it can explain how I used the objects
+scenes ['scene0']={  // this is an object name, obviously, but is also the exact name I used for my obs scenes
+    name: 'null-scene', //this is a descriptive name for use by those unfamiliar with the exact numbering of scenes
+    paths: ['scene1', 'scene1'], // these are the pathways this scene can take, used as the result of the arguments
+    length: 12000,//.... length of the scene in milliseconds. This time is technically length of scene subtract 16000ms in most cases
+    choices: ['null', 'null'] // text shown to users on the website when making their choices
 }
 scenes ['scene1']= {
     name: 'first scene',
@@ -129,13 +137,13 @@ scenes ['credits'] = {
 }
 
 
-
+// this is the function to change scenes
 async function changeScene(newScene) {
     
     await obs.send('SetCurrentScene', {
         'scene-name' : newScene
     });
-    currentScene = scenes[newScene];
+    currentScene = scenes[newScene]; // this section utilises the resulting scene as a way to call the scene's object form
 }
 
 
@@ -193,12 +201,14 @@ var b = 0;
 
 function choosingTime(){
 if (currentScene == scenes['scene0'] ||  currentScene == scenes['scene41'] ||  currentScene == scenes['scene42'] ||  currentScene == scenes['scene43'] ||  currentScene == scenes['credits']) {
+    // this function is used to automatically change scenes that have no choices, without displaying buttons
     setTimeout(Result, 0);
 }
 else {
     //........ call buttons
     io.emit('change', currentScene.choices[0], currentScene.choices[1])
-    setTimeout(Result, 16000);
+    // as mentioned before, the above calls the scene object's text choices, to allow descriptive buttons for the choices
+    setTimeout(Result, 16000); //gives users 16 seconds to make their choice, seemed to time better with the ten second countdown for some reason
 }
 }
 
