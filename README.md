@@ -1,2 +1,4 @@
 # Obs Web Socket
- 
+ This obs web socket is the backend for an interactive tv project created for the capstone unit of a Creative Industries Degree at QUT, for a client, Starlight Children's foundation. The final version is the document, senderversionlachlan.js, which is just what I decided to call it after gaining an understanding from a friend in sender.js. 
+
+ The program changes scenes to begin the narrative content, which at around ten seconds before the next scene begins, sends a message to the websites of all users to display two buttons for the choices. the website then sends back votes as a or b, which get tallied. when the duration ends, the server sends back a message to hide any buttons that are still visible, and sends a message to obs to change scene depending on the choice made.
